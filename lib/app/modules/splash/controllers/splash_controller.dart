@@ -1,25 +1,57 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:quran_kareem/app/routes/app_pages.dart';
+import 'package:quran_kareem/app/modules/home/views/home_view.dart';
 
-class SplashController extends GetxController {
-  final count = 0.obs;
+class SplashController extends GetxController with GetTickerProviderStateMixin {
+  late AnimationController _slideAnimationController;
+  late AnimationController _fadeAnimationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+  Animation<Offset> get slideAnimation => _slideAnimation;
+  Animation<double> get fadeAnimation => _fadeAnimation;
+
   @override
   void onInit() {
     super.onInit();
-    Future.delayed(Duration(seconds: 3), () {
-      Get.offNamed(Routes.HOME);
+    _slideAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: Offset(0, -1),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _slideAnimationController, curve: Curves.easeOut),
+    );
+
+    _fadeAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeAnimationController, curve: Curves.easeIn),
+    );
+
+    _fadeAnimationController.forward();
+    _slideAnimationController.forward();
+
+    Future.delayed(Duration(seconds: 4), () {
+      Get.off(
+        () => HomeView(),
+        transition: Transition.fade,
+        duration: Duration(milliseconds: 1500), // Durasi transisi fade
+      );
+    }).catchError((e) {
+      print('Unhandled error: $e');
     });
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
+    _fadeAnimationController.dispose();
+    _slideAnimationController.dispose();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
