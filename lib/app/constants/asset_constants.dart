@@ -8,6 +8,7 @@ class AssetConstants {
   static const String homeBackground = '${_backgroundImage}Home.png';
   static const String quranDecoration = '${_decorationImage}Quran.png';
   static const String transparentQuranDecoration = '${_decorationImage}Transparent Quran.png';
+  static const String frame = '${_decorationImage}Frame.png';
   static const String userDefault = '${_defaultImage}User.png';
   static const String recentlyAyatDefault = '${_defaultImage}Bismillah.png';
   static const String quranIcon = '${_iconImage}Quran.png';

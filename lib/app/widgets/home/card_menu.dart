@@ -18,58 +18,58 @@ class CardMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: gradient,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white.withOpacity(0.3),
-            offset: Offset(0, 3),
-            blurRadius: 10,
-            spreadRadius: 2,
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Image.asset(
-              AssetConstants.transparentQuranDecoration,
-              width: 130,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.3),
+              offset: Offset(0, 3),
+              blurRadius: 10,
+              spreadRadius: 2,
             ),
-          ),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  arabicTitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  latinTitle,
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
+          ],
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Image.asset(
+                AssetConstants.transparentQuranDecoration,
+                width: 130,
+              ),
             ),
-          ),
-          Positioned(
-            bottom: 5,
-            left: 5,
-            child: IconButton(
-              onPressed: onPressed,
-              icon: Container(
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    arabicTitle,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    latinTitle,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 5,
+              left: 5,
+              child: Container(
                 padding: EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   boxShadow: [
@@ -86,8 +86,8 @@ class CardMenu extends StatelessWidget {
                 child: Icon(Icons.keyboard_arrow_right, color: Colors.white),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

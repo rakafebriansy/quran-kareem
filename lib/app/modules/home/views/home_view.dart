@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
+import 'package:quran_kareem/app/routes/app_pages.dart';
+import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
 import 'package:quran_kareem/app/widgets/home/card_menu.dart';
 
 import '../controllers/home_controller.dart';
@@ -14,33 +16,9 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
     final Size screenSize = MediaQuery.of(context).size;
-    final LinearGradient gradient = LinearGradient(
-      colors: [
-        ColorConstants.shapeColor.withOpacity(1),
-        ColorConstants.darkShapeColor.withOpacity(1),
-      ],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-    );
 
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {},
-          child: Icon(Icons.menu, color: ColorConstants.shapeColor, size: 28),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage: AssetImage(AssetConstants.userDefault),
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBarMenu(),
       extendBodyBehindAppBar: true,
       body: Center(
         child: Container(
@@ -66,7 +44,7 @@ class HomeView extends GetView<HomeController> {
                           width: double.infinity,
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            gradient: gradient,
+                            gradient: ColorConstants.cardGradient,
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
@@ -144,25 +122,27 @@ class HomeView extends GetView<HomeController> {
                           crossAxisCount: 2,
                           children: [
                             CardMenu(
-                              gradient: gradient,
+                              gradient: ColorConstants.cardGradient,
                               arabicTitle: 'سورة',
                               latinTitle: 'Surah',
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.toNamed(Routes.SURAH_LIST);
+                              },
                             ),
                             CardMenu(
-                              gradient: gradient,
+                              gradient: ColorConstants.cardGradient,
                               arabicTitle: 'محفوظ',
                               latinTitle: 'Tersimpan',
                               onPressed: () {},
                             ),
                             CardMenu(
-                              gradient: gradient,
+                              gradient: ColorConstants.cardGradient,
                               arabicTitle: 'سورة يس',
                               latinTitle: 'Surah Yasin',
                               onPressed: () {},
                             ),
                             CardMenu(
-                              gradient: gradient,
+                              gradient: ColorConstants.cardGradient,
                               arabicTitle: 'آيت الكرسي',
                               latinTitle: 'Ayat Al-kursi',
                               onPressed: () {},

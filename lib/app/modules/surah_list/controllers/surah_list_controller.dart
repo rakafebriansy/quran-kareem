@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class SurahController extends GetxController {
-  //TODO: Implement SurahController
+class SurahListController extends GetxController {
+  //TODO: Implement SurahListController
 
   final count = 0.obs;
   @override
