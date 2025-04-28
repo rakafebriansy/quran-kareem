@@ -11,15 +11,16 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     super.onInit();
     _slideAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 2),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: Offset(0, -1),
+      begin: Offset(0, -4),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(parent: _slideAnimationController, curve: Curves.easeOut),
     );
+    _slideAnimationController.forward();
   }
 
   @override

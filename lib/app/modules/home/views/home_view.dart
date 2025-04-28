@@ -58,15 +58,6 @@ class HomeView extends GetView<HomeController> {
                 padding: EdgeInsets.all(24.0),
                 child: Stack(
                   children: [
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        AssetConstants.quranDecoration,
-                        width: screenSize.width * 0.7,
-                      ),
-                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -102,7 +93,8 @@ class HomeView extends GetView<HomeController> {
                                 children: [
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Al-Fatihah',
@@ -125,7 +117,7 @@ class HomeView extends GetView<HomeController> {
                                   Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                     padding: EdgeInsets.all(8),
                                     child: Text(
@@ -178,6 +170,18 @@ class HomeView extends GetView<HomeController> {
                           ],
                         ),
                       ],
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: SlideTransition(
+                        position: controller.slideAnimation,
+                        child: Image.asset(
+                          AssetConstants.quranDecoration,
+                          width: screenSize.width * 0.7,
+                        ),
+                      ),
                     ),
                   ],
                 ),
