@@ -4,10 +4,11 @@ import 'package:quran_kareem/app/modules/home/views/home_view.dart';
 
 class SplashController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController _slideAnimationController;
-  late AnimationController _fadeAnimationController;
-  late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   Animation<Offset> get slideAnimation => _slideAnimation;
+  
+  late AnimationController _fadeAnimationController;
+  late Animation<double> _fadeAnimation;
   Animation<double> get fadeAnimation => _fadeAnimation;
 
   @override
@@ -41,7 +42,7 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
       Get.off(
         () => HomeView(),
         transition: Transition.fade,
-        duration: Duration(milliseconds: 1500), // Durasi transisi fade
+        duration: Duration(milliseconds: 1500),
       );
     }).catchError((e) {
       print('Unhandled error: $e');

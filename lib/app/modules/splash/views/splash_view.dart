@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quran_kareem/app/constants/assets_manager.dart';
+import 'package:quran_kareem/app/constants/asset_constants.dart';
 
 import '../controllers/splash_controller.dart';
 
@@ -15,8 +15,8 @@ class SplashView extends GetView<SplashController> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(AssetsManager.splashScreenImage),
-            fit: BoxFit.cover,
+            image: AssetImage(AssetConstants.splashBackground),
+            fit: BoxFit.fill,
           ),
         ),
         child: Center(
@@ -48,7 +48,7 @@ class SplashView extends GetView<SplashController> {
                       ),
                       SlideTransition(
                         position: controller.slideAnimation,
-                        child: Image.asset(AssetsManager.quranImage),
+                        child: Image.asset(AssetConstants.quranIcon),
                       ),
                     ],
                   ),
