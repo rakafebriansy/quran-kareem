@@ -49,6 +49,7 @@ class SurahListView extends GetView<SurahListController> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: TextFormField(
+                            onChanged: controller.filterList,
                             decoration: InputDecoration(
                               hintText: 'Search Here',
                               hintStyle: GoogleFonts.poppins(
@@ -89,9 +90,9 @@ class SurahListView extends GetView<SurahListController> {
                                 controller: _controller,
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
-                                itemCount: controller.surahs.length,
+                                itemCount: controller.displaySurahs.length,
                                 itemBuilder: (context, index) {
-                                  if (controller.surahs.length > 0) {
+                                  if (controller.displaySurahs.length > 0) {
                                     return Column(
                                       children: [
                                         SurahCard(
@@ -160,21 +161,21 @@ class SurahCard extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            controller.surahs[index].number.toString(),
+            controller.displaySurahs[index].number.toString(),
             style: GoogleFonts.poppins(color: Colors.white),
           ),
         ),
       ),
       title: Text(
-        controller.surahs[index].latinName,
+        controller.displaySurahs[index].latinName,
         style: GoogleFonts.poppins(color: Colors.white, fontSize: 16),
       ),
       subtitle: Text(
-        '${controller.surahs[index].placeOfRevelation} • ${controller.surahs[index].numberOfVerses} VERSES',
+        '${controller.displaySurahs[index].placeOfRevelation} • ${controller.displaySurahs[index].numberOfVerses} VERSES',
         style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),
       ),
       trailing: Text(
-        controller.surahs[index].name,
+        controller.displaySurahs[index].name,
         style: GoogleFonts.amiri(color: Colors.white, fontSize: 16),
       ),
     );

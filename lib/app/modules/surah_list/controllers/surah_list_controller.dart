@@ -16,6 +16,7 @@ class SurahListController extends GetxController
 
   Rx<bool> isLoading = false.obs;
   RxList<SurahModel> surahs = <SurahModel>[].obs;
+  RxList<SurahModel> displaySurahs = <SurahModel>[].obs;
 
   final SurahRepository _surahRepository;
 
@@ -24,11 +25,26 @@ class SurahListController extends GetxController
   Future<void> fetchSurahs() async {
     try {
       isLoading(true);
-      surahs.value = await _surahRepository.getSurahs();
+      final surahs = await _surahRepository.getSurahs();
+      this.surahs.value = surahs;
+      displaySurahs.value = surahs;
     } catch (error) {
       Get.snackbar('Error while fetching data', error.toString());
     } finally {
       isLoading(false);
+    }
+  }
+
+  void filterList(String query) {
+    if (query.isEmpty) {
+      displaySurahs.value = surahs;
+    } else {
+      displaySurahs.value =
+          surahs
+              .where(
+                (item) => item.latinName.toLowerCase().contains(query.toLowerCase()),
+              )
+              .toList();
     }
   }
 
