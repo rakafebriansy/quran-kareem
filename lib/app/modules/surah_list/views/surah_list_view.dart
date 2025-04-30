@@ -82,40 +82,49 @@ class SurahListView extends GetView<SurahListController> {
                         SizedBox(height: 20),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.6,
-                          child: Scrollbar(
-                            thickness: 8,
-                            thumbVisibility: true,
-                            controller: _controller,
-                            interactive: true,
-                            child: Obx(
-                              () => ListView.builder(
-                                controller: _controller,
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: controller.displaySurahs.length,
-                                itemBuilder: (context, index) {
-                                  if (controller.displaySurahs.isNotEmpty) {
-                                    return Column(
-                                      children: [
-                                        SurahCard(
-                                          onTap: () => Get.toNamed(Routes.SURAH, arguments: controller.displaySurahs[index].number),
-                                          controller: controller,
-                                          index: index,
+                          child: Obx(() {
+                            return controller.isLoading.value
+                                ? SizedBox.shrink()
+                                : Scrollbar(
+                                  thickness: 8,
+                                  thumbVisibility: true,
+                                  controller: _controller,
+                                  interactive: true,
+                                  child: ListView.builder(
+                                    controller: _controller,
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    itemCount: controller.displaySurahs.length,
+                                    itemBuilder: (context, index) {
+                                      if (controller.displaySurahs.isNotEmpty) {
+                                        return Column(
+                                          children: [
+                                            SurahCard(
+                                              onTap:
+                                                  () => Get.toNamed(
+                                                    Routes.SURAH,
+                                                    arguments:
+                                                        controller
+                                                            .displaySurahs[index]
+                                                            .number,
+                                                  ),
+                                              controller: controller,
+                                              index: index,
+                                            ),
+                                            Divider(color: Colors.white),
+                                          ],
+                                        );
+                                      }
+                                      return Center(
+                                        child: Text(
+                                          'No data',
+                                          style: GoogleFonts.poppins(),
                                         ),
-                                        Divider(color: Colors.white),
-                                      ],
-                                    );
-                                  }
-                                  return Center(
-                                    child: Text(
-                                      'No data',
-                                      style: GoogleFonts.poppins(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
+                                      );
+                                    },
+                                  ),
+                                );
+                          }),
                         ),
                       ],
                     ),
@@ -129,7 +138,7 @@ class SurahListView extends GetView<SurahListController> {
                           alignment: Alignment.topCenter,
                           child: Container(
                             child: Image.asset(
-                              AssetConstants.quranDecoration,
+                              AssetConstants.shiningQuranDecoration,
                               width: screenSize.width * 0.6,
                             ),
                           ),

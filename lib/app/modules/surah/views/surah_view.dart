@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
+import 'package:quran_kareem/app/widgets/surah/ayah_card.dart';
 
 import '../controllers/surah_controller.dart';
 
@@ -12,7 +13,6 @@ class SurahView extends GetView<SurahController> {
   const SurahView({super.key});
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
     final ScrollController _controller = ScrollController();
 
     return Scaffold(
@@ -39,64 +39,137 @@ class SurahView extends GetView<SurahController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(4),
+                          padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             gradient: ColorConstants.cardGradient.withOpacity(
-                              0.5,
+                              0.7,
                             ),
                             borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.3),
+                                offset: Offset(0, 0),
+                                blurRadius: 2,
+                                spreadRadius: 3,
+                              ),
+                            ],
                           ),
-                          child: Text('data')
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height: 150,
+                                width: 150,
+                                child: Stack(
+                                  children: [
+                                    Image.asset(AssetConstants.surahCardStar5),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: SizedBox(
+                                        height: 130,
+                                        width: 130,
+                                        child: Opacity(
+                                          opacity: 0.5,
+                                          child: Image.asset(
+                                            AssetConstants.quranDecoration,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Obx(() {
+                                return controller.isLoading.value
+                                    ? SizedBox.shrink()
+                                    : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          controller.surah.value.name,
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 32,
+                                          ),
+                                        ),
+                                        Text(
+                                          controller.surah.value.meaning,
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${controller.surah.value.placeOfRevelation.toUpperCase()} • ${controller.surah.value.numberOfVerses} VERSES',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                              }),
+                            ],
+                          ),
                         ),
                         SizedBox(height: 20),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.6,
-                          child: Scrollbar(
-                            thickness: 8,
-                            thumbVisibility: true,
-                            controller: _controller,
-                            interactive: true,
-                            child: Obx(
-                              () => ListView.builder(
-                                controller: _controller,
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: controller.surah.value.ayah?.length,
-                                itemBuilder: (context, index) {
-                                  if (controller.surah.value.ayah != null && controller.surah.value.ayah!.isNotEmpty) {
-                                    return Column(
-                                      children: [
-                                        Text(controller.surah.value.ayah![index].latinText),
-                                        Divider(color: Colors.white),
-                                      ],
-                                    );
-                                  }
-                                  return Center(
-                                    child: Text(
-                                      controller.surah.value.ayah.toString(),
-                                      style: GoogleFonts.poppins(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
+                          child: Obx(() {
+                            return controller.isLoading.value
+                                ? SizedBox.shrink()
+                                : Scrollbar(
+                                  thickness: 8,
+                                  thumbVisibility: true,
+                                  controller: _controller,
+                                  interactive: true,
+                                  child: ListView.builder(
+                                    controller: _controller,
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        controller.surah.value.ayah?.length,
+                                    itemBuilder: (context, index) {
+                                      if (controller.surah.value.ayah != null &&
+                                          controller
+                                              .surah
+                                              .value
+                                              .ayah!
+                                              .isNotEmpty) {
+                                        return Column(
+                                          children: [
+                                            AyahCard(
+                                              controller: controller,
+                                              index: index,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                bottom: 24,
+                                              ),
+                                              child: Divider(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }
+                                      return Center(
+                                        child: Text(
+                                          'No data',
+                                          style: GoogleFonts.poppins(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                          }),
                         ),
                       ],
-                    ),
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          child: Image.asset(
-                            AssetConstants.quranDecoration,
-                            width: screenSize.width * 0.6,
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),

@@ -26,11 +26,9 @@ class SurahCache {
   Future<SurahModel?> getOneSurahFromCache(int number) async {
     final prefs = await SharedPreferences.getInstance();
     final String? surahJson = prefs.getString('surah/${number}');
-    print(surahJson);
 
     if (surahJson != null) {
       final Map<String, dynamic> data = jsonDecode(surahJson);
-      print(data);
       return SurahModel.fromJson(data);
     } else {
       return null;

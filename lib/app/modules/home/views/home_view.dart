@@ -165,7 +165,7 @@ class HomeView extends GetView<HomeController> {
                           alignment: Alignment.topCenter,
                           child: Container(
                             child: Image.asset(
-                              AssetConstants.quranDecoration,
+                              AssetConstants.shiningQuranDecoration,
                               width: screenSize.width * 0.8,
                             ),
                           ),

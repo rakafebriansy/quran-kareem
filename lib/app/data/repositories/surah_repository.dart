@@ -12,10 +12,8 @@ class SurahRepository {
     List<SurahModel> surahs = await surahCache.getAllSurahFromCache();
 
     if (surahs.isNotEmpty) {
-      print('From cacje');
       return surahs;
     } else {
-      print('from api');
       final ListSurahResponse response =
           await surahApiProvider.getAllSurahFromApi();
       await surahCache.saveAllSurahToCache(response.data);
@@ -27,12 +25,11 @@ class SurahRepository {
     SurahModel? surah = await surahCache.getOneSurahFromCache(number);
 
     if (surah != null) {
-      print('From cacje on');
       return surah;
     } else {
-      print('from api on');
-      final SurahResponse response =
-          await surahApiProvider.getOneSurahFromApi(number);
+      final SurahResponse response = await surahApiProvider.getOneSurahFromApi(
+        number,
+      );
       await surahCache.saveOneSurahToCache(response.data);
       return response.data;
     }
