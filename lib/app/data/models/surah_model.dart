@@ -50,7 +50,7 @@ class SurahModel {
       'arti': meaning,
       'deskripsi': description,
       'audioFull': audioFull,
-      'ayah': ayah,
+      'ayat': ayah?.map((e) => e.toJson()).toList(),
     };
   }
 

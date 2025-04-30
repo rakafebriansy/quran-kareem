@@ -27,10 +27,10 @@ class SurahRepository {
     SurahModel? surah = await surahCache.getOneSurahFromCache(number);
 
     if (surah != null) {
-      print('From cacje');
+      print('From cacje on');
       return surah;
     } else {
-      print('from api');
+      print('from api on');
       final SurahResponse response =
           await surahApiProvider.getOneSurahFromApi(number);
       await surahCache.saveOneSurahToCache(response.data);

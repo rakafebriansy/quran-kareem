@@ -23,7 +23,7 @@ class AyahModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'nomor': number,
+      'nomorAyat': number,
       'teksArab': arabText,
       'teksLatin': latinText,
       'teksIndonesia': meaning,
