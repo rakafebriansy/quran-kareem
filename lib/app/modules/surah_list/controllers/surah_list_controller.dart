@@ -25,7 +25,7 @@ class SurahListController extends GetxController
   Future<void> fetchSurahs() async {
     try {
       isLoading(true);
-      final surahs = await _surahRepository.getSurahs();
+      final surahs = await _surahRepository.getAllSurah();
       this.surahs.value = surahs;
       displaySurahs.value = surahs;
     } catch (error) {
@@ -42,7 +42,8 @@ class SurahListController extends GetxController
       displaySurahs.value =
           surahs
               .where(
-                (item) => item.latinName.toLowerCase().contains(query.toLowerCase()),
+                (item) =>
+                    item.latinName.toLowerCase().contains(query.toLowerCase()),
               )
               .toList();
     }

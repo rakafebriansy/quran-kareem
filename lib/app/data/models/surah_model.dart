@@ -1,3 +1,5 @@
+import 'package:quran_kareem/app/data/models/ayah_model.dart';
+
 class SurahModel {
   final int number;
   final String name;
@@ -7,6 +9,7 @@ class SurahModel {
   final String meaning;
   final String description;
   final Map<String, dynamic> audioFull;
+  final List<AyahModel>? ayah;
 
   SurahModel({
     required this.number,
@@ -17,6 +20,7 @@ class SurahModel {
     required this.meaning,
     required this.description,
     required this.audioFull,
+    this.ayah,
   });
 
   factory SurahModel.fromJson(Map<String, dynamic> json) => SurahModel(
@@ -28,6 +32,12 @@ class SurahModel {
     meaning: json['arti'],
     description: json['deskripsi'],
     audioFull: json['audioFull'],
+    ayah:
+        json['ayat'] != null
+            ? (json['ayat'] as List<dynamic>)
+                .map((e) => AyahModel.fromJson(e))
+                .toList()
+            : null,
   );
 
   Map<String, dynamic> toJson() {
@@ -40,14 +50,52 @@ class SurahModel {
       'arti': meaning,
       'deskripsi': description,
       'audioFull': audioFull,
+      'ayah': ayah,
     };
+  }
+
+  factory SurahModel.empty() {
+    return SurahModel(
+      number: 0,
+      name: '',
+      latinName: '',
+      numberOfVerses: 0,
+      placeOfRevelation: '',
+      meaning: '',
+      description: '',
+      audioFull: {},
+      ayah: null,
+    );
+  }
+}
+
+class ListSurahResponse {
+  final int code;
+  final String message;
+  final List<SurahModel> data;
+
+  ListSurahResponse({
+    required this.code,
+    required this.message,
+    required this.data,
+  });
+
+  factory ListSurahResponse.fromJson(Map<String, dynamic> json) {
+    return ListSurahResponse(
+      code: json['code'],
+      message: json['message'],
+      data:
+          (json['data'] as List<dynamic>)
+              .map((e) => SurahModel.fromJson(e))
+              .toList(),
+    );
   }
 }
 
 class SurahResponse {
   final int code;
   final String message;
-  final List<SurahModel> data;
+  final SurahModel data;
 
   SurahResponse({
     required this.code,
@@ -59,7 +107,7 @@ class SurahResponse {
     return SurahResponse(
       code: json['code'],
       message: json['message'],
-      data: (json['data'] as List<dynamic>).map((e) => SurahModel.fromJson(e)).toList(),
+      data: SurahModel.fromJson(json['data']),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class SurahCache {
-  Future<List<SurahModel>> getSurahsFromCache() async {
+  Future<List<SurahModel>> getAllSurahFromCache() async {
     final prefs = await SharedPreferences.getInstance();
     final String? surahsJson = prefs.getString('surahs');
 
@@ -15,9 +15,29 @@ class SurahCache {
     }
   }
 
-  Future<void> saveSurahsToCache(List<SurahModel> surahs) async {
+  Future<void> saveAllSurahToCache(List<SurahModel> surahs) async {
     final prefs = await SharedPreferences.getInstance();
-    final String surahsJson = jsonEncode(surahs.map((surah) => surah.toJson()).toList());
+    final String surahsJson = jsonEncode(
+      surahs.map((surah) => surah.toJson()).toList(),
+    );
     prefs.setString('surahs', surahsJson);
+  }
+
+  Future<SurahModel?> getOneSurahFromCache(int number) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? surahJson = prefs.getString('surahs/${number}');
+
+    if (surahJson != null) {
+      final Map<String, dynamic> data = jsonDecode(surahJson);
+      return SurahModel.fromJson(data);
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> saveOneSurahToCache(SurahModel surah) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String surahJson = jsonEncode(surah.toJson());
+    prefs.setString('surah/${surah.number}', surahJson);
   }
 }

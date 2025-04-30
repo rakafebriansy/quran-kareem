@@ -4,19 +4,16 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
-import 'package:quran_kareem/app/routes/app_pages.dart';
 import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
-import 'package:quran_kareem/app/widgets/surah_list/surah_card.dart';
 
-import '../controllers/surah_list_controller.dart';
+import '../controllers/surah_controller.dart';
 
-class SurahListView extends GetView<SurahListController> {
-  SurahListView({super.key});
-  final ScrollController _controller = ScrollController();
-
+class SurahView extends GetView<SurahController> {
+  const SurahView({super.key});
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+    final ScrollController _controller = ScrollController();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -41,7 +38,6 @@ class SurahListView extends GetView<SurahListController> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(height: 140),
                         Container(
                           padding: EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -50,34 +46,7 @@ class SurahListView extends GetView<SurahListController> {
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: TextFormField(
-                            onChanged: controller.filterList,
-                            decoration: InputDecoration(
-                              hintText: 'Search Here',
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: Colors.white54,
-                              ),
-                              suffixIcon: Icon(
-                                Icons.search,
-                                color: Colors.white54,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 14,
-                              ),
-                            ),
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: Text('data')
                         ),
                         SizedBox(height: 20),
                         Container(
@@ -92,23 +61,19 @@ class SurahListView extends GetView<SurahListController> {
                                 controller: _controller,
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
-                                itemCount: controller.displaySurahs.length,
+                                itemCount: controller.surah.value.ayah?.length,
                                 itemBuilder: (context, index) {
-                                  if (controller.displaySurahs.isNotEmpty) {
+                                  if (controller.surah.value.ayah != null && controller.surah.value.ayah!.isNotEmpty) {
                                     return Column(
                                       children: [
-                                        SurahCard(
-                                          onTap: () => Get.toNamed(Routes.SURAH, arguments: controller.displaySurahs[index].number),
-                                          controller: controller,
-                                          index: index,
-                                        ),
+                                        Text(controller.surah.value.ayah![index].latinText),
                                         Divider(color: Colors.white),
                                       ],
                                     );
                                   }
                                   return Center(
                                     child: Text(
-                                      'No data',
+                                      controller.surah.value.ayah.toString(),
                                       style: GoogleFonts.poppins(),
                                     ),
                                   );
@@ -123,15 +88,12 @@ class SurahListView extends GetView<SurahListController> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      child: SlideTransition(
-                        position: controller.slideAnimation,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: Image.asset(
-                              AssetConstants.quranDecoration,
-                              width: screenSize.width * 0.6,
-                            ),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          child: Image.asset(
+                            AssetConstants.quranDecoration,
+                            width: screenSize.width * 0.6,
                           ),
                         ),
                       ),

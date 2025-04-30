@@ -122,6 +122,7 @@ class HomeView extends GetView<HomeController> {
                           crossAxisCount: 2,
                           children: [
                             CardMenu(
+                              count: 1,
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'سورة',
                               latinTitle: 'Surah',
@@ -130,18 +131,21 @@ class HomeView extends GetView<HomeController> {
                               },
                             ),
                             CardMenu(
+                              count: 2,
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'محفوظ',
                               latinTitle: 'Tersimpan',
                               onPressed: () {},
                             ),
                             CardMenu(
+                              count: 3,
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'سورة يس',
                               latinTitle: 'Surah Yasin',
                               onPressed: () {},
                             ),
                             CardMenu(
+                              count: 4,
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'آيت الكرسي',
                               latinTitle: 'Ayat Al-kursi',

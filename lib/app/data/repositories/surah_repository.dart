@@ -8,17 +8,32 @@ class SurahRepository {
 
   SurahRepository(this.surahApiProvider, this.surahCache);
 
-  Future<List<SurahModel>> getSurahs() async {
-    List<SurahModel> surahs = await surahCache.getSurahsFromCache();
+  Future<List<SurahModel>> getAllSurah() async {
+    List<SurahModel> surahs = await surahCache.getAllSurahFromCache();
 
     if (surahs.isNotEmpty) {
       print('From cacje');
       return surahs;
     } else {
       print('from api');
+      final ListSurahResponse response =
+          await surahApiProvider.getAllSurahFromApi();
+      await surahCache.saveAllSurahToCache(response.data);
+      return response.data;
+    }
+  }
+
+  Future<SurahModel> getOneSurah(int number) async {
+    SurahModel? surah = await surahCache.getOneSurahFromCache(number);
+
+    if (surah != null) {
+      print('From cacje');
+      return surah;
+    } else {
+      print('from api');
       final SurahResponse response =
-          await surahApiProvider.fetchSurahsFromApi();
-      await surahCache.saveSurahsToCache(response.data);
+          await surahApiProvider.getOneSurahFromApi(number);
+      await surahCache.saveOneSurahToCache(response.data);
       return response.data;
     }
   }

@@ -5,12 +5,14 @@ import 'package:quran_kareem/app/constants/asset_constants.dart';
 class CardMenu extends StatelessWidget {
   const CardMenu({
     super.key,
+    required this.count,
     required this.gradient,
     required this.arabicTitle,
     required this.latinTitle,
     required this.onPressed,
   });
 
+  final int count;
   final String latinTitle;
   final String arabicTitle;
   final VoidCallback onPressed;
@@ -18,6 +20,22 @@ class CardMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late final String starCardDecoration;
+    switch (count) {
+      case 1:
+        starCardDecoration = AssetConstants.surahCardStar1;
+        break;
+      case 2:
+        starCardDecoration = AssetConstants.surahCardStar2;
+        break;
+      case 3:
+        starCardDecoration = AssetConstants.surahCardStar3;
+        break;
+      default:
+        starCardDecoration = AssetConstants.surahCardStar4;
+        break;
+    }
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -35,6 +53,11 @@ class CardMenu extends StatelessWidget {
         ),
         child: Stack(
           children: [
+            Positioned(
+              right: 0,
+              left: 0,
+              child: Image.asset(starCardDecoration, width: 120),
+            ),
             Positioned(
               bottom: 0,
               right: 0,

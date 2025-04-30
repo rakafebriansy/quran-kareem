@@ -10,12 +10,21 @@ class SurahApiProvider {
     ),
   );
 
-  Future<SurahResponse> fetchSurahsFromApi() async {
+  Future<ListSurahResponse> getAllSurahFromApi() async {
     final response = await _dio.get('/surat');
+    if (response.statusCode == 200) {
+      return ListSurahResponse.fromJson(response.data);
+    } else {
+      throw Exception('Failed to fetch surah from api');
+    }
+  }
+
+  Future<SurahResponse> getOneSurahFromApi(int number) async {
+    final response = await _dio.get('/surat/$number');
     if (response.statusCode == 200) {
       return SurahResponse.fromJson(response.data);
     } else {
-      throw Exception('Failed to load surah');
+      throw Exception('Failed to fetch surah from api');
     }
   }
 }
