@@ -27,7 +27,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SURAH_LIST,
-      page: () => const SurahListView(),
+      page: () => SurahListView(),
       binding: SurahListBinding(),
     ),
   ];

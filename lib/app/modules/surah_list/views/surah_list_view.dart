@@ -9,9 +9,13 @@ import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
 import '../controllers/surah_list_controller.dart';
 
 class SurahListView extends GetView<SurahListController> {
-  const SurahListView({super.key});
+  SurahListView({super.key});
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBarMenu(),
@@ -35,17 +39,26 @@ class SurahListView extends GetView<SurahListController> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(height: 190),
+                        Container(height: 140),
                         Container(
                           padding: EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            gradient: ColorConstants.cardGradient.withOpacity(0.5),
+                            gradient: ColorConstants.cardGradient.withOpacity(
+                              0.5,
+                            ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: TextFormField(
                             decoration: InputDecoration(
                               hintText: 'Search Here',
-                              hintStyle: GoogleFonts.poppins(fontSize: 14,color: Colors.white54),
+                              hintStyle: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: Colors.white54,
+                              ),
+                              suffixIcon: Icon(
+                                Icons.search,
+                                color: Colors.white54,
+                              ),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(14),
@@ -57,68 +70,67 @@ class SurahListView extends GetView<SurahListController> {
                                 vertical: 14,
                               ),
                             ),
-                            style: GoogleFonts.poppins(fontSize: 14,color: Colors.white),
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         SizedBox(height: 20),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.6,
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: 10,
-                            itemBuilder: (context, snapshot) {
-                              return Column(
-                                children: [
-                                  ListTile(
-                                    leading: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                            AssetConstants.frame,
-                                          ),
+                          child: Scrollbar(
+                            thickness: 8,
+                            thumbVisibility: true,
+                            controller: _controller,
+                            interactive: true,
+                            child: Obx(
+                              () => ListView.builder(
+                                controller: _controller,
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                itemCount: controller.surahs.length,
+                                itemBuilder: (context, index) {
+                                  if (controller.surahs.length > 0) {
+                                    return Column(
+                                      children: [
+                                        SurahCard(
+                                          controller: controller,
+                                          index: index,
                                         ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          '1',
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
+                                        Divider(color: Colors.white),
+                                      ],
+                                    );
+                                  }
+                                  return Center(
+                                    child: Text(
+                                      'No data',
+                                      style: GoogleFonts.poppins(),
                                     ),
-                                    title: Text(
-                                      'Al-Fatihah',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      'MECCAN • 7 VERSES',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    trailing: Text(
-                                      'ةحتافلا',
-                                      style: GoogleFonts.amiri(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                  Divider(color: Colors.white),
-                                ],
-                              );
-                            },
+                                  );
+                                },
+                              ),
+                            ),
                           ),
                         ),
                       ],
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: SlideTransition(
+                        position: controller.slideAnimation,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            child: Image.asset(
+                              AssetConstants.quranDecoration,
+                              width: screenSize.width * 0.6,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -126,6 +138,44 @@ class SurahListView extends GetView<SurahListController> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SurahCard extends StatelessWidget {
+  const SurahCard({super.key, required this.controller, required this.index});
+
+  final SurahListController controller;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Container(
+        height: 30,
+        width: 30,
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(AssetConstants.frame)),
+        ),
+        child: Center(
+          child: Text(
+            controller.surahs[index].number.toString(),
+            style: GoogleFonts.poppins(color: Colors.white),
+          ),
+        ),
+      ),
+      title: Text(
+        controller.surahs[index].latinName,
+        style: GoogleFonts.poppins(color: Colors.white, fontSize: 16),
+      ),
+      subtitle: Text(
+        '${controller.surahs[index].placeOfRevelation} • ${controller.surahs[index].numberOfVerses} VERSES',
+        style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),
+      ),
+      trailing: Text(
+        controller.surahs[index].name,
+        style: GoogleFonts.amiri(color: Colors.white, fontSize: 16),
       ),
     );
   }

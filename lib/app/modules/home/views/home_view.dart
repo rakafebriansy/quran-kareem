@@ -157,9 +157,14 @@ class HomeView extends GetView<HomeController> {
                       right: 0,
                       child: SlideTransition(
                         position: controller.slideAnimation,
-                        child: Image.asset(
-                          AssetConstants.quranDecoration,
-                          width: screenSize.width * 0.7,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            child: Image.asset(
+                              AssetConstants.quranDecoration,
+                              width: screenSize.width * 0.8,
+                            ),
+                          ),
                         ),
                       ),
                     ),
