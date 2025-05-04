@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^6.2.1
   dio: ^5.8.0+1
   shared_preferences: ^2.5.3
+  share_plus: ^11.0.0
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +68,7 @@ flutter:
     - assets/images/icon/
     - assets/images/default/
     - assets/images/decoration/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

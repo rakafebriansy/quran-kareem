@@ -2,12 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/modules/surah/controllers/surah_controller.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AyahCard extends StatelessWidget {
-  const AyahCard({super.key, required this.controller, required this.index});
+  AyahCard({super.key, required this.controller, required this.index});
+  final String appDownloadUrl = dotenv.env['APP_DOWNLOAD_URL'] ?? 'example.com';
 
   final SurahController controller;
   final int index;
+
+  Future<void> shareAyah({
+    required BuildContext context,
+    required String ayah,
+  }) async {
+    final box = context.findRenderObject() as RenderBox?;
+    final shareText =
+        '$ayah\n\nDapatkan aplikasi Quran terbaik untuk belajar lebih dalam tentang Al-Quran. Unduh sekarang di: $appDownloadUrl';
+    final params = ShareParams(
+      text: shareText,
+      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+    );
+
+    await SharePlus.instance.share(params);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +60,12 @@ class AyahCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      shareAyah(
+                        context: context,
+                        ayah: controller.surah.value.ayah![index].arabText,
+                      );
+                    },
                     child: Icon(
                       Icons.share_outlined,
                       color: ColorConstants.shapeColor,
@@ -75,8 +98,8 @@ class AyahCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              textAlign: TextAlign.right,
               controller.surah.value.ayah![index].arabText,
+              textAlign: TextAlign.right,
               style: GoogleFonts.poppins(color: Colors.white, fontSize: 30),
             ),
           ),
