@@ -92,7 +92,7 @@ class SurahView extends GetView<SurahController> {
                                           style: GoogleFonts.poppins(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 32,
+                                            fontSize: 28,
                                           ),
                                         ),
                                         Text(
@@ -100,7 +100,7 @@ class SurahView extends GetView<SurahController> {
                                           style: GoogleFonts.poppins(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 16,
+                                            fontSize: 12,
                                           ),
                                         ),
                                         Text(
@@ -108,7 +108,7 @@ class SurahView extends GetView<SurahController> {
                                           style: GoogleFonts.poppins(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 14,
+                                            fontSize: 12,
                                           ),
                                         ),
                                       ],

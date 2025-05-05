@@ -94,14 +94,17 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.white,
+                                      ),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     padding: EdgeInsets.all(8),
                                     child: Text(
                                       'Terakhir dibaca',
                                       style: GoogleFonts.poppins(
-                                        color: ColorConstants.darkShapeColor,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.w400,
                                         fontSize: 12,
                                       ),
@@ -142,7 +145,9 @@ class HomeView extends GetView<HomeController> {
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'سورة يس',
                               latinTitle: 'Surah Yasin',
-                              onPressed: () {},
+                              onPressed:
+                                  () =>
+                                      Get.toNamed(Routes.SURAH, arguments: 36),
                             ),
                             CardMenu(
                               count: 4,
