@@ -117,7 +117,7 @@ class _AudioPlayerState extends State<AyahAudioPlayer> {
           child: Icon(
             isPlaying ? Icons.stop_outlined : Icons.play_arrow_outlined,
             color: ColorConstants.shapeColor,
-            size: 26,
+            size: 28,
           ),
         ),
         if (isPlaying)
@@ -128,7 +128,7 @@ class _AudioPlayerState extends State<AyahAudioPlayer> {
             child: Icon(
               isPaused ? Icons.play_arrow_outlined : Icons.pause_outlined,
               color: ColorConstants.shapeColor,
-              size: 26,
+              size: 28,
             ),
           ),
       ],
