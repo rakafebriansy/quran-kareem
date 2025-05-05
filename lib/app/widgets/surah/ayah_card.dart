@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/modules/surah/controllers/surah_controller.dart';
+import 'package:quran_kareem/app/widgets/surah/audio_player.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -73,13 +74,9 @@ class AyahCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 6),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.play_arrow_outlined,
-                      color: ColorConstants.shapeColor,
-                      size: 26,
-                    ),
+                  AyahAudioPlayer(
+                    ayah: controller.surah.value.ayah![index],
+                    surahNumber: controller.surah.value.number,
                   ),
                   SizedBox(width: 6),
                   GestureDetector(
