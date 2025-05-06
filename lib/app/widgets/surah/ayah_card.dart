@@ -40,7 +40,7 @@ class _AyahCardState extends State<AyahCard> {
     }
   }
 
-  Future<void> checkIsBookmark() async {
+  Future<void> checkIsBookmarked() async {
     final bool isBookmarked = await controller.checkIsBookmarked(
       controller.surah.value.ayah![widget.index].number,
     );
@@ -53,26 +53,18 @@ class _AyahCardState extends State<AyahCard> {
 
   Future<void> toggleBookmark({required BuildContext context}) async {
     try {
-      await checkIsBookmark();
       if (isBookmarked != null && isBookmarked!) {
         await controller.removeBookmark(
           controller.surah.value.ayah![widget.index].number,
         );
-        setState(() {
-          isBookmarked = false;
-        });
       } else {
         await controller.addToBookmark(
           controller.surah.value.ayah![widget.index].number,
         );
-        setState(() {
-          isBookmarked = true;
-        });
       }
+      await checkIsBookmarked();
     } catch (error) {
       print(error);
-    } finally {
-      Navigator.pop(context);
     }
   }
 
@@ -91,8 +83,6 @@ class _AyahCardState extends State<AyahCard> {
       await controller.getPinnedAyah();
     } catch (error) {
       print(error);
-    } finally {
-      Navigator.pop(context);
     }
   }
 
@@ -100,7 +90,7 @@ class _AyahCardState extends State<AyahCard> {
   void initState() {
     super.initState();
     controller = Get.find<SurahController>();
-    checkIsBookmark();
+    checkIsBookmarked();
   }
 
   @override
@@ -145,124 +135,144 @@ class _AyahCardState extends State<AyahCard> {
                       showModalBottomSheet(
                         context: context,
                         builder:
-                            (context) => Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      shareAyah(
-                                        context: context,
-                                        ayah:
-                                            controller
-                                                .surah
-                                                .value
-                                                .ayah![widget.index]
-                                                .arabText,
-                                      );
-                                    },
-                                    child: ListTile(
-                                      leading: Icon(
-                                        Icons.share,
-                                        color: ColorConstants.darkShapeColor,
-                                        size: 26,
-                                      ),
-                                      title: Text(
-                                        'Share Ayat',
-                                        style: GoogleFonts.openSans(
-                                          color: ColorConstants.darkBanner,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 6),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: ListTile(
-                                      leading: Icon(
-                                        Icons.copy,
-                                        color: ColorConstants.darkShapeColor,
-                                        size: 26,
-                                      ),
-                                      title: Text(
-                                        'Salin Ayat',
-                                        style: GoogleFonts.openSans(
-                                          color: ColorConstants.darkBanner,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 6),
-                                  if (isBookmarked != null)
-                                    GestureDetector(
-                                      onTap: () async {
-                                        await toggleBookmark(context: context);
-                                      },
-                                      child: ListTile(
-                                        leading: Icon(
-                                          isBookmarked!
-                                              ? Icons.bookmark_remove
-                                              : Icons.bookmark_add,
-                                          color: ColorConstants.darkShapeColor,
-                                          size: 26,
-                                        ),
-                                        title: Text(
-                                          isBookmarked!
-                                              ? 'Hapus dari Bookmark'
-                                              : 'Simpan ke Bookmark',
-                                          style: GoogleFonts.openSans(
-                                            color: ColorConstants.darkBanner,
+                            (context) => StatefulBuilder(
+                              builder:
+                                  (context, setModalState) => Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            shareAyah(
+                                              context: context,
+                                              ayah:
+                                                  controller
+                                                      .surah
+                                                      .value
+                                                      .ayah![widget.index]
+                                                      .arabText,
+                                            );
+                                          },
+                                          child: ListTile(
+                                            leading: Icon(
+                                              Icons.share,
+                                              color:
+                                                  ColorConstants.darkShapeColor,
+                                              size: 26,
+                                            ),
+                                            title: Text(
+                                              'Share Ayat',
+                                              style: GoogleFonts.openSans(
+                                                color:
+                                                    ColorConstants.darkBanner,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  SizedBox(width: 12),
-                                  Obx(() {
-                                    final isPinned =
-                                        controller
-                                                .pinnedAyah
-                                                .value
-                                                ?.surahNumber ==
-                                            controller.surah.value.number &&
-                                        controller
-                                                .pinnedAyah
-                                                .value
-                                                ?.ayahNumber ==
-                                            controller
-                                                .surah
-                                                .value
-                                                .ayah?[widget.index]
-                                                .number;
-                                    return GestureDetector(
-                                      onTap: () {
-                                        togglePinAyah(
-                                          context: context,
-                                          isPinned: isPinned,
-                                        );
-                                      },
-                                      child: ListTile(
-                                        leading: Icon(
-                                          isPinned
-                                              ? Icons.link_off
-                                              : Icons.link,
-                                          color: ColorConstants.darkShapeColor,
-                                          size: 26,
-                                        ),
-                                        title: Text(
-                                          isPinned
-                                              ? 'Hapus Tanda Terakhir Dibaca'
-                                              : 'Tandai Terakhir Dibaca',
-                                          style: GoogleFonts.openSans(
-                                            color: ColorConstants.darkBanner,
+                                        SizedBox(width: 6),
+                                        GestureDetector(
+                                          onTap: () {},
+                                          child: ListTile(
+                                            leading: Icon(
+                                              Icons.copy,
+                                              color:
+                                                  ColorConstants.darkShapeColor,
+                                              size: 26,
+                                            ),
+                                            title: Text(
+                                              'Salin Ayat',
+                                              style: GoogleFonts.openSans(
+                                                color:
+                                                    ColorConstants.darkBanner,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  }),
-                                ],
-                              ),
+                                        SizedBox(width: 6),
+                                        if (isBookmarked != null)
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await toggleBookmark(
+                                                context: context,
+                                              );
+                                              setModalState((){});
+                                            },
+                                            child: ListTile(
+                                              leading: Icon(
+                                                isBookmarked!
+                                                    ? Icons.bookmark_remove
+                                                    : Icons.bookmark_add,
+                                                color:
+                                                    ColorConstants
+                                                        .darkShapeColor,
+                                                size: 26,
+                                              ),
+                                              title: Text(
+                                                isBookmarked!
+                                                    ? 'Hapus dari Bookmark'
+                                                    : 'Simpan ke Bookmark',
+                                                style: GoogleFonts.openSans(
+                                                  color:
+                                                      ColorConstants.darkBanner,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        SizedBox(width: 12),
+                                        Obx(() {
+                                          final isPinned =
+                                              controller
+                                                      .pinnedAyah
+                                                      .value
+                                                      ?.surahNumber ==
+                                                  controller
+                                                      .surah
+                                                      .value
+                                                      .number &&
+                                              controller
+                                                      .pinnedAyah
+                                                      .value
+                                                      ?.ayahNumber ==
+                                                  controller
+                                                      .surah
+                                                      .value
+                                                      .ayah?[widget.index]
+                                                      .number;
+                                          return GestureDetector(
+                                            onTap: () {
+                                              togglePinAyah(
+                                                context: context,
+                                                isPinned: isPinned,
+                                              );
+                                            },
+                                            child: ListTile(
+                                              leading: Icon(
+                                                isPinned
+                                                    ? Icons.link_off
+                                                    : Icons.link,
+                                                color:
+                                                    ColorConstants
+                                                        .darkShapeColor,
+                                                size: 26,
+                                              ),
+                                              title: Text(
+                                                isPinned
+                                                    ? 'Hapus Tanda Terakhir Dibaca'
+                                                    : 'Tandai Terakhir Dibaca',
+                                                style: GoogleFonts.openSans(
+                                                  color:
+                                                      ColorConstants.darkBanner,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                      ],
+                                    ),
+                                  ),
                             ),
                       );
                     },
