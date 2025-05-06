@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/routes/app_pages.dart';
-import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
 import 'package:quran_kareem/app/widgets/home/card_menu.dart';
 
 import '../controllers/home_controller.dart';
@@ -18,7 +17,7 @@ class HomeView extends GetView<HomeController> {
     final Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBarMenu(),
+      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
       extendBodyBehindAppBar: true,
       body: Center(
         child: Container(
@@ -156,7 +155,8 @@ class HomeView extends GetView<HomeController> {
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'آيت الكرسي',
                               latinTitle: 'Ayat Al-kursi',
-                              onPressed: () {},
+                              onPressed: () => 
+                                      Get.toNamed(Routes.AYAT_AL_KURSI, arguments: 36),
                             ),
                           ],
                         ),

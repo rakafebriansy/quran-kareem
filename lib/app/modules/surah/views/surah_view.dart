@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
-import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
 import 'package:quran_kareem/app/widgets/surah/ayah_card.dart';
 
 import '../controllers/surah_controller.dart';
@@ -17,7 +16,23 @@ class SurahView extends GetView<SurahController> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBarMenu(),
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () => Get.back(),
+          child: Icon(Icons.arrow_back, color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Obx(
+          () => Text(
+            controller.surah.value.latinName,
+            style: GoogleFonts.poppins(
+              color: ColorConstants.shapeColor,
+              fontSize: 24,
+            ),
+          ),
+        ),
+      ),
       extendBodyBehindAppBar: true,
       body: Center(
         child: Container(

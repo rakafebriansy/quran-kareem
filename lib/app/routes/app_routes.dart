@@ -8,6 +8,7 @@ abstract class Routes {
   static const SURAH_LIST = _Paths.SURAH_LIST;
   static const SURAH = _Paths.SURAH;
   static const BOOKMARKS = _Paths.BOOKMARKS;
+  static const AYAT_AL_KURSI = _Paths.AYAT_AL_KURSI;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const SURAH_LIST = '/surah-list';
   static const SURAH = '/surah';
   static const BOOKMARKS = '/bookmarks';
+  static const AYAT_AL_KURSI = '/ayat-al-kursi';
 }

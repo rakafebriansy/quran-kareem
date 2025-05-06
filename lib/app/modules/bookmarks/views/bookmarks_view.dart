@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/data/models/ayah_model.dart';
-import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
 import '../controllers/bookmarks_controller.dart';
 
 class BookmarksView extends GetView<BookmarksController> {
@@ -17,7 +16,11 @@ class BookmarksView extends GetView<BookmarksController> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBarMenu(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
       extendBodyBehindAppBar: true,
       body: Center(
         child: Container(
@@ -90,7 +93,9 @@ class BookmarksView extends GetView<BookmarksController> {
                                   interactive: true,
                                   child: ListView.builder(
                                     controller: _controller,
-                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                    ),
                                     shrinkWrap: true,
                                     itemCount: controller.displaySurahs.length,
                                     itemBuilder: (context, surahIndex) {
@@ -157,11 +162,14 @@ class BookmarksView extends GetView<BookmarksController> {
                                                           MainAxisSize.min,
                                                       children: [
                                                         Row(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceBetween,
-                                                                  mainAxisSize: MainAxisSize.min,
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
                                                           children: [
                                                             CircleAvatar(
                                                               backgroundColor:
@@ -179,10 +187,12 @@ class BookmarksView extends GetView<BookmarksController> {
                                                                 ),
                                                               ),
                                                             ),
-                                                            SizedBox(width: 10,),
+                                                            SizedBox(width: 10),
                                                             Expanded(
                                                               child: Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .end,
                                                                 children: [
                                                                   Text(
                                                                     ayah.arabText,
@@ -209,7 +219,8 @@ class BookmarksView extends GetView<BookmarksController> {
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w400,
-                                                                      fontSize: 8,
+                                                                      fontSize:
+                                                                          8,
                                                                       color:
                                                                           Colors
                                                                               .white,

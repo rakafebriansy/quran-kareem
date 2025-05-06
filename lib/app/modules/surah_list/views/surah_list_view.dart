@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/routes/app_pages.dart';
-import 'package:quran_kareem/app/widgets/app_bar_menu.dart';
 import 'package:quran_kareem/app/widgets/surah_list/surah_card.dart';
 
 import '../controllers/surah_list_controller.dart';
@@ -20,7 +19,11 @@ class SurahListView extends GetView<SurahListController> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBarMenu(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
       extendBodyBehindAppBar: true,
       body: Center(
         child: Container(
