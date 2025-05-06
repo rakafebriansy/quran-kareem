@@ -7,7 +7,7 @@ import 'package:quran_kareem/app/data/caches/bookmark_cache.dart';
 
 class SurahController extends GetxController {
   Rx<bool> isLoading = false.obs;
-  late Rx<SurahModel> surah = SurahModel.empty().obs;
+  Rx<SurahModel> surah = SurahModel.empty().obs;
   Rx<BookmarkModel?> pinnedAyah = Rx<BookmarkModel?>(null);
 
   final SurahRepository _surahRepository;

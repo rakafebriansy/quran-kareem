@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:quran_kareem/app/modules/home/bindings/home_binding.dart';
 import 'package:quran_kareem/app/modules/home/views/home_view.dart';
 
 class SplashController extends GetxController with GetTickerProviderStateMixin {
@@ -37,6 +38,8 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
 
     _fadeAnimationController.forward();
     _slideAnimationController.forward();
+
+    HomeBinding().dependencies(); 
 
     Future.delayed(Duration(seconds: 4), () {
       Get.off(

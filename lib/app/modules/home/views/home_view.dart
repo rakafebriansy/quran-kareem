@@ -13,7 +13,6 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final HomeController controller = Get.put(HomeController());
     final Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -39,79 +38,136 @@ class HomeView extends GetView<HomeController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(height: 190),
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            gradient: ColorConstants.cardGradient,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.white.withOpacity(0.3),
-                                offset: Offset(0, 3),
-                                blurRadius: 10,
-                                spreadRadius: 2,
+                        GestureDetector(
+                          onTap:
+                              () => Get.toNamed(
+                                Routes.SURAH,
+                                arguments:
+                                    controller.pinnedSurah.value!.number,
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                AssetConstants.recentlyAyatDefault,
-                                width: 240,
-                              ),
-                              SizedBox(height: 24),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              gradient: ColorConstants.cardGradient,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.3),
+                                  offset: Offset(0, 3),
+                                  blurRadius: 10,
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                            ),
+                            child: Obx(() {
+                              return controller.pinnedSurah.value != null &&
+                                      controller.pinnedAyah.value != null
+                                  ? Row(
                                     children: [
-                                      Text(
-                                        'Al-Fatihah',
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              controller
+                                                  .pinnedAyah
+                                                  .value!
+                                                  .arabText,
+                                              textAlign: TextAlign.end,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 26,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            SizedBox(height: 24),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      controller
+                                                          .pinnedSurah
+                                                          .value!
+                                                          .latinName,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 16,
+                                                          ),
+                                                    ),
+                                                    Text(
+                                                      'Ayat no: ${controller.pinnedAyah.value!.number}',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 12,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          10,
+                                                        ),
+                                                  ),
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 14,
+                                                    vertical: 8,
+                                                  ),
+                                                  child: Text(
+                                                    'Terakhir dibaca',
+                                                    style: GoogleFonts.poppins(
+                                                      color:
+                                                          ColorConstants
+                                                              .shapeColor,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Text(
-                                        'Ayat no: 1',
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                        ),
-                                      ),
+                                      // SizedBox(width: 20),
+                                      // Image.asset(
+                                      //   AssetConstants.greaterThanIcon,
+                                      //   height: 40,
+                                      // ),
                                     ],
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 1,
-                                        color: Colors.white,
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
+                                  )
+                                  : Text(
+                                    'Terakhir Dibaca Belum Ada',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
                                     ),
-                                    padding: EdgeInsets.all(8),
-                                    child: Text(
-                                      'Terakhir dibaca',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  );
+                            }),
                           ),
                         ),
                         SizedBox(height: 24),
@@ -128,9 +184,11 @@ class HomeView extends GetView<HomeController> {
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'سورة',
                               latinTitle: 'Surah',
-                              onPressed: () {
-                                Get.toNamed(Routes.SURAH_LIST);
-                              },
+                              onPressed:
+                                  () =>
+                                      Get.toNamed(Routes.SURAH_LIST)!.then((_) {
+                                        controller.fetchPinnedSurah();
+                                      }),
                             ),
                             CardMenu(
                               count: 2,
@@ -147,16 +205,23 @@ class HomeView extends GetView<HomeController> {
                               arabicTitle: 'سورة يس',
                               latinTitle: 'Surah Yasin',
                               onPressed:
-                                  () =>
-                                      Get.toNamed(Routes.SURAH, arguments: 36),
+                                  () => Get.toNamed(
+                                    Routes.SURAH,
+                                    arguments: 36,
+                                  )!.then((_) {
+                                    controller.fetchPinnedSurah();
+                                  }),
                             ),
                             CardMenu(
                               count: 4,
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'آيت الكرسي',
                               latinTitle: 'Ayat Al-kursi',
-                              onPressed: () => 
-                                      Get.toNamed(Routes.AYAT_AL_KURSI, arguments: 36),
+                              onPressed:
+                                  () => Get.toNamed(
+                                    Routes.AYAT_AL_KURSI,
+                                    arguments: 36,
+                                  ),
                             ),
                           ],
                         ),

@@ -198,7 +198,7 @@ class _AyahCardState extends State<AyahCard> {
                                               await toggleBookmark(
                                                 context: context,
                                               );
-                                              setModalState((){});
+                                              setModalState(() {});
                                             },
                                             child: ListTile(
                                               leading: Icon(
