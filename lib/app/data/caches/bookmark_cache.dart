@@ -24,7 +24,7 @@ class BookmarkCache {
     if (!bookmarks.any(
       (b) =>
           b.surahNumber == newBookmark.surahNumber &&
-          b.verseNumber == newBookmark.verseNumber,
+          b.ayahNumber == newBookmark.ayahNumber,
     )) {
       bookmarks.add(newBookmark);
     }
@@ -43,7 +43,7 @@ class BookmarkCache {
       bookmarks.removeWhere(
         (b) =>
             b.surahNumber == targetBookmark.surahNumber &&
-            b.verseNumber == targetBookmark.verseNumber,
+            b.ayahNumber == targetBookmark.ayahNumber,
       );
 
       final String updatedJson = jsonEncode(
@@ -61,7 +61,7 @@ class BookmarkCache {
       return bookmarks.any(
         (b) =>
             b.surahNumber == bookmark.surahNumber &&
-            b.verseNumber == bookmark.verseNumber,
+            b.ayahNumber == bookmark.ayahNumber,
       );
     }
 

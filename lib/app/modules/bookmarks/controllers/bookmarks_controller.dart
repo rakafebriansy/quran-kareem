@@ -27,7 +27,7 @@ class BookmarksController extends GetxController {
       final Map<int, List<int>> bookmarkMap = {};
 
       for (var b in bookmarks) {
-        bookmarkMap.putIfAbsent(b.surahNumber, () => []).add(b.verseNumber);
+        bookmarkMap.putIfAbsent(b.surahNumber, () => []).add(b.ayahNumber);
       }
 
       for (var entry in bookmarkMap.entries) {

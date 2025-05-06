@@ -134,7 +134,7 @@ class SurahView extends GetView<SurahController> {
                         ),
                         SizedBox(height: 20),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.6,
+                          height: MediaQuery.of(context).size.height * 0.64,
                           child: Obx(() {
                             return controller.isLoading.value
                                 ? SizedBox.shrink()
@@ -159,7 +159,6 @@ class SurahView extends GetView<SurahController> {
                                         return Column(
                                           children: [
                                             AyahCard(
-                                              controller: controller,
                                               index: index,
                                             ),
                                             Padding(

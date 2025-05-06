@@ -44,7 +44,7 @@ class SurahListView extends GetView<SurahListController> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(height: 140),
+                        Container(height: 180),
                         Container(
                           padding: EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -111,7 +111,6 @@ class SurahListView extends GetView<SurahListController> {
                                                             .displaySurahs[index]
                                                             .number,
                                                   ),
-                                              controller: controller,
                                               index: index,
                                             ),
                                             Divider(color: Colors.white),
@@ -142,7 +141,7 @@ class SurahListView extends GetView<SurahListController> {
                           child: Container(
                             child: Image.asset(
                               AssetConstants.shiningQuranDecoration,
-                              width: screenSize.width * 0.6,
+                              width: screenSize.width * 0.7,
                             ),
                           ),
                         ),

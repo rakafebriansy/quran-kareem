@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
+import 'package:get/get.dart';
 import 'package:quran_kareem/app/modules/surah_list/controllers/surah_list_controller.dart';
 
 class SurahCard extends StatelessWidget {
-  const SurahCard({super.key, required this.controller, required this.index, required this.onTap});
+  SurahCard({super.key, required this.index, required this.onTap});
 
-  final SurahListController controller;
   final VoidCallback onTap;
+  final controller = Get.find<SurahListController>();
   final int index;
 
   @override
@@ -31,7 +32,10 @@ class SurahCard extends StatelessWidget {
         ),
         title: Text(
           controller.displaySurahs[index].latinName,
-          style: GoogleFonts.poppins(color: ColorConstants.shapeColor, fontSize: 16),
+          style: GoogleFonts.poppins(
+            color: ColorConstants.shapeColor,
+            fontSize: 16,
+          ),
         ),
         subtitle: Text(
           '${controller.displaySurahs[index].placeOfRevelation} • ${controller.displaySurahs[index].numberOfVerses} VERSES',
@@ -39,7 +43,10 @@ class SurahCard extends StatelessWidget {
         ),
         trailing: Text(
           controller.displaySurahs[index].name,
-          style: GoogleFonts.amiri(color: Colors.white, fontSize: 16),
+          style: GoogleFonts.amiri(
+            color: ColorConstants.shapeColor,
+            fontSize: 16,
+          ),
         ),
       ),
     );

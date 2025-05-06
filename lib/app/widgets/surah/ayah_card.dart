@@ -5,10 +5,10 @@ import 'package:quran_kareem/app/modules/surah/controllers/surah_controller.dart
 import 'package:quran_kareem/app/widgets/surah/audio_player.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 
 class AyahCard extends StatefulWidget {
-  AyahCard({super.key, required this.controller, required this.index});
-  final SurahController controller;
+  AyahCard({super.key, required this.index});
   final int index;
 
   @override
@@ -17,6 +17,7 @@ class AyahCard extends StatefulWidget {
 
 class _AyahCardState extends State<AyahCard> {
   final String appDownloadUrl = dotenv.env['APP_DOWNLOAD_URL'] ?? 'example.com';
+  late SurahController controller;
 
   bool? isBookmarked;
 
@@ -40,27 +41,29 @@ class _AyahCardState extends State<AyahCard> {
   }
 
   Future<void> checkIsBookmark() async {
-    final bool isBookmarked = await widget.controller.checkIsBookmarked(
-      widget.controller.surah.value.ayah![widget.index].number,
+    final bool isBookmarked = await controller.checkIsBookmarked(
+      controller.surah.value.ayah![widget.index].number,
     );
-    setState(() {
-      this.isBookmarked = isBookmarked;
-    });
+    if (mounted) {
+      setState(() {
+        this.isBookmarked = isBookmarked;
+      });
+    }
   }
 
   Future<void> toggleBookmark({required BuildContext context}) async {
     try {
       await checkIsBookmark();
       if (isBookmarked != null && isBookmarked!) {
-        await widget.controller.removeBookmark(
-          widget.controller.surah.value.ayah![widget.index].number,
+        await controller.removeBookmark(
+          controller.surah.value.ayah![widget.index].number,
         );
         setState(() {
           isBookmarked = false;
         });
       } else {
-        await widget.controller.addToBookmark(
-          widget.controller.surah.value.ayah![widget.index].number,
+        await controller.addToBookmark(
+          controller.surah.value.ayah![widget.index].number,
         );
         setState(() {
           isBookmarked = true;
@@ -73,9 +76,30 @@ class _AyahCardState extends State<AyahCard> {
     }
   }
 
+  Future<void> togglePinAyah({
+    required BuildContext context,
+    required bool isPinned,
+  }) async {
+    try {
+      if (isPinned) {
+        await controller.removePinAyah();
+      } else {
+        await controller.pinAyah(
+          controller.surah.value.ayah![widget.index].number,
+        );
+      }
+      await controller.getPinnedAyah();
+    } catch (error) {
+      print(error);
+    } finally {
+      Navigator.pop(context);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    controller = Get.find<SurahController>();
     checkIsBookmark();
   }
 
@@ -104,8 +128,7 @@ class _AyahCardState extends State<AyahCard> {
                 backgroundColor: ColorConstants.shapeColor,
                 radius: 12,
                 child: Text(
-                  widget.controller.surah.value.ayah![widget.index].number
-                      .toString(),
+                  controller.surah.value.ayah![widget.index].number.toString(),
                   style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),
                 ),
               ),
@@ -113,11 +136,12 @@ class _AyahCardState extends State<AyahCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   AyahAudioPlayer(
-                    ayah: widget.controller.surah.value.ayah![widget.index],
-                    surahNumber: widget.controller.surah.value.number,
+                    ayah: controller.surah.value.ayah![widget.index],
+                    surahNumber: controller.surah.value.number,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      await controller.getPinnedAyah();
                       showModalBottomSheet(
                         context: context,
                         builder:
@@ -132,8 +156,7 @@ class _AyahCardState extends State<AyahCard> {
                                       shareAyah(
                                         context: context,
                                         ayah:
-                                            widget
-                                                .controller
+                                            controller
                                                 .surah
                                                 .value
                                                 .ayah![widget.index]
@@ -195,23 +218,49 @@ class _AyahCardState extends State<AyahCard> {
                                         ),
                                       ),
                                     ),
-                                  SizedBox(width: 6),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: ListTile(
-                                      leading: Icon(
-                                        Icons.push_pin,
-                                        color: ColorConstants.darkShapeColor,
-                                        size: 26,
-                                      ),
-                                      title: Text(
-                                        'Tandai Terakhir Dibaca',
-                                        style: GoogleFonts.openSans(
-                                          color: ColorConstants.darkBanner,
+                                  SizedBox(width: 12),
+                                  Obx(() {
+                                    final isPinned =
+                                        controller
+                                                .pinnedAyah
+                                                .value
+                                                ?.surahNumber ==
+                                            controller.surah.value.number &&
+                                        controller
+                                                .pinnedAyah
+                                                .value
+                                                ?.ayahNumber ==
+                                            controller
+                                                .surah
+                                                .value
+                                                .ayah?[widget.index]
+                                                .number;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        togglePinAyah(
+                                          context: context,
+                                          isPinned: isPinned,
+                                        );
+                                      },
+                                      child: ListTile(
+                                        leading: Icon(
+                                          isPinned
+                                              ? Icons.link_off
+                                              : Icons.link,
+                                          color: ColorConstants.darkShapeColor,
+                                          size: 26,
+                                        ),
+                                        title: Text(
+                                          isPinned
+                                              ? 'Hapus Tanda Terakhir Dibaca'
+                                              : 'Tandai Terakhir Dibaca',
+                                          style: GoogleFonts.openSans(
+                                            color: ColorConstants.darkBanner,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  }),
                                 ],
                               ),
                             ),
@@ -230,7 +279,7 @@ class _AyahCardState extends State<AyahCard> {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              widget.controller.surah.value.ayah![widget.index].arabText,
+              controller.surah.value.ayah![widget.index].arabText,
               textAlign: TextAlign.right,
               style: GoogleFonts.poppins(color: Colors.white, fontSize: 30),
             ),
@@ -240,7 +289,7 @@ class _AyahCardState extends State<AyahCard> {
             alignment: Alignment.centerRight,
             child: Text(
               textAlign: TextAlign.right,
-              widget.controller.surah.value.ayah![widget.index].latinText,
+              controller.surah.value.ayah![widget.index].latinText,
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -252,7 +301,7 @@ class _AyahCardState extends State<AyahCard> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              widget.controller.surah.value.ayah![widget.index].meaning,
+              controller.surah.value.ayah![widget.index].meaning,
               style: GoogleFonts.poppins(color: Colors.white, fontSize: 16),
             ),
           ),
