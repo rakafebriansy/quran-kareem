@@ -67,6 +67,7 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Expanded(
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           mainAxisSize: MainAxisSize.min,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -124,7 +125,10 @@ class HomeView extends GetView<HomeController> {
                                                 ),
                                                 Container(
                                                   decoration: BoxDecoration(
-                                                    color: Colors.white,
+                                                    border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.white
+                                                    ),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                           10,
@@ -138,10 +142,10 @@ class HomeView extends GetView<HomeController> {
                                                     'Terakhir dibaca',
                                                     style: GoogleFonts.poppins(
                                                       color:
-                                                          ColorConstants
-                                                              .shapeColor,
+                                                          Colors
+                                                              .white,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                          FontWeight.w400,
                                                       fontSize: 12,
                                                     ),
                                                   ),
@@ -151,11 +155,11 @@ class HomeView extends GetView<HomeController> {
                                           ],
                                         ),
                                       ),
-                                      // SizedBox(width: 20),
-                                      // Image.asset(
-                                      //   AssetConstants.greaterThanIcon,
-                                      //   height: 40,
-                                      // ),
+                                      SizedBox(width: 20),
+                                      Image.asset(
+                                        AssetConstants.greaterThanIcon,
+                                        height: 40,
+                                      ),
                                     ],
                                   )
                                   : Text(
