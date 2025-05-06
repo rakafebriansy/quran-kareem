@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/bookmarks/bindings/bookmarks_binding.dart';
+import '../modules/bookmarks/views/bookmarks_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.SURAH,
       page: () => const SurahView(),
       binding: SurahBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOKMARKS,
+      page: () => BookmarksView(),
+      binding: BookmarksBinding(),
     ),
   ];
 }

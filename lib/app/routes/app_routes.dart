@@ -7,6 +7,7 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const SURAH_LIST = _Paths.SURAH_LIST;
   static const SURAH = _Paths.SURAH;
+  static const BOOKMARKS = _Paths.BOOKMARKS;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const SURAH_LIST = '/surah-list';
   static const SURAH = '/surah';
+  static const BOOKMARKS = '/bookmarks';
 }

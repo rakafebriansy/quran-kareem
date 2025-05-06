@@ -138,7 +138,9 @@ class HomeView extends GetView<HomeController> {
                               gradient: ColorConstants.cardGradient,
                               arabicTitle: 'محفوظ',
                               latinTitle: 'Tersimpan',
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.toNamed(Routes.BOOKMARKS);
+                              },
                             ),
                             CardMenu(
                               count: 3,

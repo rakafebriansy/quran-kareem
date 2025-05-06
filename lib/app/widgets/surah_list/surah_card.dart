@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
+import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/modules/surah_list/controllers/surah_list_controller.dart';
 
 class SurahCard extends StatelessWidget {
@@ -30,11 +31,11 @@ class SurahCard extends StatelessWidget {
         ),
         title: Text(
           controller.displaySurahs[index].latinName,
-          style: GoogleFonts.poppins(color: Colors.white, fontSize: 16),
+          style: GoogleFonts.poppins(color: ColorConstants.shapeColor, fontSize: 16),
         ),
         subtitle: Text(
           '${controller.displaySurahs[index].placeOfRevelation} • ${controller.displaySurahs[index].numberOfVerses} VERSES',
-          style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),
+          style: GoogleFonts.poppins(color: Colors.white70, fontSize: 12),
         ),
         trailing: Text(
           controller.displaySurahs[index].name,
