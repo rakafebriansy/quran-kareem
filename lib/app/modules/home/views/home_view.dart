@@ -28,7 +28,7 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 padding: EdgeInsets.all(24.0),
@@ -72,19 +72,6 @@ class HomeView extends GetView<HomeController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              controller
-                                                  .pinnedAyah
-                                                  .value!
-                                                  .arabText,
-                                              textAlign: TextAlign.end,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 26,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            SizedBox(height: 24),
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
@@ -135,7 +122,7 @@ class HomeView extends GetView<HomeController> {
                                                         ),
                                                   ),
                                                   padding: EdgeInsets.symmetric(
-                                                    horizontal: 14,
+                                                    horizontal: 12,
                                                     vertical: 8,
                                                   ),
                                                   child: Text(
@@ -154,11 +141,6 @@ class HomeView extends GetView<HomeController> {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(width: 20),
-                                      Image.asset(
-                                        AssetConstants.greaterThanIcon,
-                                        height: 40,
                                       ),
                                     ],
                                   )

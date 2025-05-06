@@ -119,7 +119,7 @@ class SurahView extends GetView<SurahController> {
                                           ),
                                         ),
                                         Text(
-                                          '${controller.surah.value.placeOfRevelation.toUpperCase()} • ${controller.surah.value.numberOfVerses} VERSES',
+                                          '${controller.surah.value.placeOfRevelation.toUpperCase()} • ${controller.surah.value.numberOfVerses} AYAT',
                                           style: GoogleFonts.poppins(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w500,

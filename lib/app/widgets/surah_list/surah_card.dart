@@ -38,7 +38,7 @@ class SurahCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          '${controller.displaySurahs[index].placeOfRevelation} • ${controller.displaySurahs[index].numberOfVerses} VERSES',
+          '${controller.displaySurahs[index].placeOfRevelation} • ${controller.displaySurahs[index].numberOfVerses} AYAT',
           style: GoogleFonts.poppins(color: Colors.white70, fontSize: 12),
         ),
         trailing: Text(

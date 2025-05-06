@@ -56,7 +56,7 @@ class SurahListView extends GetView<SurahListController> {
                           child: TextFormField(
                             onChanged: controller.filterList,
                             decoration: InputDecoration(
-                              hintText: 'Search Here',
+                              hintText: 'Cari surah...',
                               hintStyle: GoogleFonts.poppins(
                                 fontSize: 14,
                                 color: Colors.white54,

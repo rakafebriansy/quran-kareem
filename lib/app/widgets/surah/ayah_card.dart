@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/modules/surah/controllers/surah_controller.dart';
 import 'package:quran_kareem/app/widgets/surah/audio_player.dart';
@@ -86,6 +88,25 @@ class _AyahCardState extends State<AyahCard> {
     }
   }
 
+  void copyToClipboard() {
+    Clipboard.setData(
+      ClipboardData(
+        text:
+            '${controller.surah.value.ayah![widget.index].arabText}\n\n${controller.surah.value.ayah![widget.index].meaning}',
+      ),
+    ).then((_) {
+      Get.snackbar(
+        ' ',
+        'Snackbar dengan style lebih keren!',
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.FLOATING, // Menampilkan snackbar melayang
+        duration: Duration(seconds: 3),
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -114,12 +135,23 @@ class _AyahCardState extends State<AyahCard> {
               ],
             ),
             child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: ColorConstants.shapeColor,
-                radius: 12,
-                child: Text(
-                  controller.surah.value.ayah![widget.index].number.toString(),
-                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),
+              leading: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AssetConstants.frame),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    controller.surah.value.ayah![widget.index].number
+                        .toString(),
+                    style: GoogleFonts.poppins(
+                      color: ColorConstants.shapeColor,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
               ),
               trailing: Row(
@@ -174,7 +206,9 @@ class _AyahCardState extends State<AyahCard> {
                                         ),
                                         SizedBox(width: 6),
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            copyToClipboard();
+                                          },
                                           child: ListTile(
                                             leading: Icon(
                                               Icons.copy,
