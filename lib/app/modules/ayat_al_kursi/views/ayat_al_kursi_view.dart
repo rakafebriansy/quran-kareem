@@ -58,6 +58,7 @@ class AyatAlKursiView extends GetView<AyatAlKursiController> {
                       controller: _controller,
                       interactive: true,
                       child: SingleChildScrollView(
+                        controller: _controller,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
