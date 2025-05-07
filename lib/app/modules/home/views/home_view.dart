@@ -42,8 +42,12 @@ class HomeView extends GetView<HomeController> {
                           onTap:
                               () => Get.toNamed(
                                 Routes.SURAH,
-                                arguments:
-                                    controller.pinnedSurah.value!.number,
+                                arguments: {
+                                  'surahNumber':
+                                      controller.pinnedSurah.value!.number,
+                                  'targetAyah':
+                                      controller.pinnedAyah.value!.number,
+                                },
                               ),
                           child: Container(
                             width: double.infinity,
@@ -64,82 +68,66 @@ class HomeView extends GetView<HomeController> {
                               return controller.pinnedSurah.value != null &&
                                       controller.pinnedAyah.value != null
                                   ? Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
                                     children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                          .pinnedSurah
-                                                          .value!
-                                                          .latinName,
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 16,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      'Ayat no: ${controller.pinnedAyah.value!.number}',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontSize: 12,
-                                                          ),
-                                                    ),
-                                                  ],
+                                      Column(
+                                        mainAxisSize:
+                                            MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            controller
+                                                .pinnedSurah
+                                                .value!
+                                                .latinName,
+                                            style:
+                                                GoogleFonts.poppins(
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                      FontWeight.bold,
+                                                  fontSize: 16,
                                                 ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      width: 1,
-                                                      color: Colors.white
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          10,
-                                                        ),
-                                                  ),
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: 12,
-                                                    vertical: 8,
-                                                  ),
-                                                  child: Text(
-                                                    'Terakhir dibaca',
-                                                    style: GoogleFonts.poppins(
-                                                      color:
-                                                          Colors
-                                                              .white,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
+                                          ),
+                                          Text(
+                                            'Ayat no: ${controller.pinnedAyah.value!.number}',
+                                            style:
+                                                GoogleFonts.poppins(
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                      FontWeight.w400,
+                                                  fontSize: 12,
                                                 ),
-                                              ],
-                                            ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            width: 1,
+                                            color: Colors.white,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(
+                                                10,
+                                              ),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 8,
+                                        ),
+                                        child: Text(
+                                          'Terakhir dibaca',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontWeight:
+                                                FontWeight.w400,
+                                            fontSize: 12,
+                                          ),
                                         ),
                                       ),
                                     ],

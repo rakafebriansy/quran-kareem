@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/data/models/ayah_model.dart';
+import 'package:quran_kareem/app/routes/app_pages.dart';
 import '../controllers/bookmarks_controller.dart';
 
 class BookmarksView extends GetView<BookmarksController> {
@@ -104,7 +105,10 @@ class BookmarksView extends GetView<BookmarksController> {
                                     shrinkWrap: true,
                                     itemCount: controller.displaySurahs.length,
                                     itemBuilder: (context, surahIndex) {
-                                      if (controller.displaySurahs.isNotEmpty && controller.nestedControllers.isNotEmpty) {
+                                      if (controller.displaySurahs.isNotEmpty &&
+                                          controller
+                                              .nestedControllers
+                                              .isNotEmpty) {
                                         return Padding(
                                           padding: const EdgeInsets.only(
                                             bottom: 10,
@@ -164,11 +168,13 @@ class BookmarksView extends GetView<BookmarksController> {
                                                       thickness: 4,
                                                       thumbVisibility: true,
                                                       controller:
-                                                          controller.nestedControllers[surahIndex],
+                                                          controller
+                                                              .nestedControllers[surahIndex],
                                                       interactive: true,
                                                       child: ListView.builder(
                                                         controller:
-                                                            controller.nestedControllers[surahIndex],
+                                                            controller
+                                                                .nestedControllers[surahIndex],
                                                         padding:
                                                             EdgeInsets.zero,
                                                         shrinkWrap: true,
@@ -185,106 +191,122 @@ class BookmarksView extends GetView<BookmarksController> {
                                                               controller
                                                                   .displaySurahs[surahIndex]
                                                                   .ayah![ayahIndex];
-                                                          return Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                children: [
-                                                                  CircleAvatar(
-                                                                    backgroundColor:
-                                                                        ColorConstants
-                                                                            .shapeColor,
-                                                                    radius: 12,
-                                                                    child: Text(
-                                                                      ayah.number
-                                                                          .toString(),
-                                                                      style: GoogleFonts.poppins(
-                                                                        color:
-                                                                            Colors.white,
-                                                                        fontSize:
-                                                                            12,
+                                                          return GestureDetector(
+                                                            onTap:
+                                                                () => Get.toNamed(
+                                                                  Routes.SURAH,
+                                                                  arguments: {
+                                                                    'surahNumber':
+                                                                        controller
+                                                                            .displaySurahs[surahIndex]
+                                                                            .number,
+                                                                    'targetAyah':
+                                                                        controller
+                                                                            .displaySurahs[surahIndex]
+                                                                            .ayah![ayahIndex].number,
+                                                                  },
+                                                                ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    CircleAvatar(
+                                                                      backgroundColor:
+                                                                          ColorConstants
+                                                                              .shapeColor,
+                                                                      radius:
+                                                                          12,
+                                                                      child: Text(
+                                                                        ayah.number
+                                                                            .toString(),
+                                                                        style: GoogleFonts.poppins(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              12,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 10,
-                                                                  ),
-                                                                  Expanded(
-                                                                    child: Column(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        Text(
-                                                                          ayah.arabText,
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          style: GoogleFonts.poppins(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize:
-                                                                                16,
+                                                                    SizedBox(
+                                                                      width: 10,
+                                                                    ),
+                                                                    Expanded(
+                                                                      child: Column(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.end,
+                                                                        children: [
+                                                                          Text(
+                                                                            ayah.arabText,
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style: GoogleFonts.poppins(
+                                                                              color:
+                                                                                  Colors.white,
+                                                                              fontSize:
+                                                                                  16,
+                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height:
-                                                                              5,
-                                                                        ),
-                                                                        Text(
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          ayah.latinText,
-                                                                          style: GoogleFonts.poppins(
-                                                                            fontWeight:
-                                                                                FontWeight.w400,
-                                                                            fontSize:
-                                                                                8,
-                                                                            color:
-                                                                                Colors.white,
+                                                                          SizedBox(
+                                                                            height:
+                                                                                5,
                                                                           ),
-                                                                        ),
-                                                                      ],
+                                                                          Text(
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            ayah.latinText,
+                                                                            style: GoogleFonts.poppins(
+                                                                              fontWeight:
+                                                                                  FontWeight.w400,
+                                                                              fontSize:
+                                                                                  8,
+                                                                              color:
+                                                                                  Colors.white,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Text(
+                                                                    ayah.meaning,
+                                                                    style: GoogleFonts.poppins(
+                                                                      color:
+                                                                          Colors
+                                                                              .white,
+                                                                      fontSize:
+                                                                          10,
                                                                     ),
                                                                   ),
-                                                                ],
-                                                              ),
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .centerLeft,
-                                                                child: Text(
-                                                                  ayah.meaning,
-                                                                  style: GoogleFonts.poppins(
-                                                                    color:
-                                                                        Colors
-                                                                            .white,
-                                                                    fontSize:
-                                                                        10,
-                                                                  ),
                                                                 ),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              Divider(),
-                                                            ],
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Divider(),
+                                                              ],
+                                                            ),
                                                           );
                                                         },
                                                       ),

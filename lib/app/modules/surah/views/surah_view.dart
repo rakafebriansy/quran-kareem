@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quran_kareem/app/constants/asset_constants.dart';
 import 'package:quran_kareem/app/constants/color_constants.dart';
 import 'package:quran_kareem/app/widgets/surah/ayah_card.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../controllers/surah_controller.dart';
 
@@ -12,8 +13,9 @@ class SurahView extends GetView<SurahController> {
   const SurahView({super.key});
   @override
   Widget build(BuildContext context) {
-    final ScrollController _controller = ScrollController();
-        final appBarHeight =
+    final ItemPositionsListener itemPositionsListener =
+        ItemPositionsListener.create();
+    final appBarHeight =
         MediaQuery.of(context).padding.top + AppBar().preferredSize.height;
 
     return Scaffold(
@@ -140,82 +142,70 @@ class SurahView extends GetView<SurahController> {
                           child: Obx(() {
                             return controller.isLoading.value
                                 ? SizedBox.shrink()
-                                : Scrollbar(
-                                  thickness: 8,
-                                  thumbVisibility: true,
-                                  controller: _controller,
-                                  interactive: true,
-                                  child: ListView.builder(
-                                    controller: _controller,
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        controller.surah.value.number > 1
-                                            ? controller
-                                                    .surah
-                                                    .value
-                                                    .ayah!
-                                                    .length +
-                                                1
-                                            : controller
-                                                .surah
-                                                .value
-                                                .ayah
-                                                ?.length,
-                                    itemBuilder: (context, index) {
-                                      if (controller.surah.value.ayah != null &&
-                                          controller
-                                              .surah
-                                              .value
-                                              .ayah!
-                                              .isNotEmpty) {
-                                        switch (index) {
-                                          case 0:
-                                            if (controller.surah.value.number >
-                                                1) {
-                                              return Container(
-                                                padding: EdgeInsets.only(bottom: 30),
-                                                child: Center(
-                                                  child: Image.asset(
-                                                    AssetConstants
-                                                        .bismillahDefault,
-                                                    width: 200,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                          default:
-                                            return Column(
-                                              children: [
-                                                AyahCard(index: index - 1),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                        bottom: 24,
-                                                      ),
-                                                  child: Divider(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                        }
-                                      }
-                                      return controller
+                                : ScrollablePositionedList.builder(
+                                  itemScrollController: controller.itemScrollController,
+                                  itemPositionsListener: itemPositionsListener,
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      controller.surah.value.number > 1
+                                          ? controller
                                                   .surah
                                                   .value
                                                   .ayah!
-                                                  .length >
-                                              0
-                                          ? SizedBox.shrink()
-                                          : Center(
-                                            child: Text(
-                                              'No data',
-                                              style: GoogleFonts.poppins(),
-                                            ),
+                                                  .length +
+                                              1
+                                          : controller.surah.value.ayah!.length,
+                                  itemBuilder: (context, index) {
+                                    if (controller.surah.value.ayah != null &&
+                                        controller
+                                            .surah
+                                            .value
+                                            .ayah!
+                                            .isNotEmpty) {
+                                      switch (index) {
+                                        case 0:
+                                          if (controller.surah.value.number >
+                                              1) {
+                                            return Container(
+                                              padding: EdgeInsets.only(
+                                                bottom: 30,
+                                              ),
+                                              child: Center(
+                                                child: Image.asset(
+                                                  AssetConstants
+                                                      .bismillahDefault,
+                                                  width: 200,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        default:
+                                          return Column(
+                                            children: [
+                                              AyahCard(index: index - 1),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  bottom: 24,
+                                                ),
+                                                child: Divider(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
                                           );
-                                    },
-                                  ),
+                                      }
+                                    }
+                                    return controller.surah.value.ayah!.length >
+                                            0
+                                        ? SizedBox.shrink()
+                                        : Center(
+                                          child: Text(
+                                            'No data',
+                                            style: GoogleFonts.poppins(),
+                                          ),
+                                        );
+                                  },
                                 );
                           }),
                         ),

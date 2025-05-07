@@ -106,10 +106,12 @@ class SurahListView extends GetView<SurahListController> {
                                               onTap:
                                                   () => Get.toNamed(
                                                     Routes.SURAH,
-                                                    arguments:
-                                                        controller
-                                                            .displaySurahs[index]
-                                                            .number,
+                                                    arguments: {
+                                                      'surahNumber':
+                                                          controller
+                                                              .displaySurahs[index]
+                                                              .number,
+                                                    },
                                                   ),
                                               index: index,
                                             ),
