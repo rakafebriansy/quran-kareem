@@ -97,6 +97,7 @@ class _AudioPlayerState extends State<AyahAudioPlayer> {
 
   Future<void> _stopAudio() async {
     setState(() {
+      isPaused = false;
       isPlaying = false;
     });
     await _player.stop();

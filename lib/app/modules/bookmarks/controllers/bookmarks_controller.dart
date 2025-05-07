@@ -8,7 +8,7 @@ import 'package:quran_kareem/app/data/repositories/surah_repository.dart';
 class BookmarksController extends GetxController {
   Rx<bool> isLoading = false.obs;
   RxList<BookmarkModel> bookmarks = <BookmarkModel>[].obs;
-  List<SurahModel> surahs = <SurahModel>[].obs;
+  List<SurahModel> surahs = <SurahModel>[];
   RxList<SurahModel> displaySurahs = <SurahModel>[].obs;
 
   final SurahRepository _surahRepository;
@@ -25,6 +25,7 @@ class BookmarksController extends GetxController {
   Future<void> fetchSurahs() async {
     try {
       isLoading(true);
+      this.surahs = [];
       await getAllBookmarks();
 
       final Map<int, List<int>> bookmarkMap = {};

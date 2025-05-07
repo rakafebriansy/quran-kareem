@@ -48,7 +48,9 @@ class HomeView extends GetView<HomeController> {
                                   'targetAyah':
                                       controller.pinnedAyah.value!.number,
                                 },
-                              ),
+                              )!.then((_) {
+                                controller.fetchPinnedSurah();
+                              }),
                           child: Container(
                             width: double.infinity,
                             padding: EdgeInsets.all(20),
@@ -71,12 +73,10 @@ class HomeView extends GetView<HomeController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Column(
-                                        mainAxisSize:
-                                            MainAxisSize.min,
+                                        mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -85,23 +85,19 @@ class HomeView extends GetView<HomeController> {
                                                 .pinnedSurah
                                                 .value!
                                                 .latinName,
-                                            style:
-                                                GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.bold,
-                                                  fontSize: 16,
-                                                ),
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
                                           ),
                                           Text(
                                             'Ayat no: ${controller.pinnedAyah.value!.number}',
-                                            style:
-                                                GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontWeight:
-                                                      FontWeight.w400,
-                                                  fontSize: 12,
-                                                ),
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -111,10 +107,9 @@ class HomeView extends GetView<HomeController> {
                                             width: 1,
                                             color: Colors.white,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(
-                                                10,
-                                              ),
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
                                         ),
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 12,
@@ -124,8 +119,7 @@ class HomeView extends GetView<HomeController> {
                                           'Terakhir dibaca',
                                           style: GoogleFonts.poppins(
                                             color: Colors.white,
-                                            fontWeight:
-                                                FontWeight.w400,
+                                            fontWeight: FontWeight.w400,
                                             fontSize: 12,
                                           ),
                                         ),
@@ -170,7 +164,9 @@ class HomeView extends GetView<HomeController> {
                               arabicTitle: 'محفوظ',
                               latinTitle: 'Tersimpan',
                               onPressed: () {
-                                Get.toNamed(Routes.BOOKMARKS);
+                                Get.toNamed(Routes.BOOKMARKS)!.then((_) {
+                                  controller.fetchPinnedSurah();
+                                });
                               },
                             ),
                             CardMenu(
@@ -181,7 +177,7 @@ class HomeView extends GetView<HomeController> {
                               onPressed:
                                   () => Get.toNamed(
                                     Routes.SURAH,
-                                    arguments: 36,
+                                    arguments: {'surahNumber': 36},
                                   )!.then((_) {
                                     controller.fetchPinnedSurah();
                                   }),

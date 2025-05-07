@@ -170,7 +170,7 @@ class _AyahCardState extends State<AyahCard> {
                             (context) => StatefulBuilder(
                               builder:
                                   (context, setModalState) => Padding(
-                                    padding: const EdgeInsets.all(20),
+                                    padding: const EdgeInsets.all(12),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,

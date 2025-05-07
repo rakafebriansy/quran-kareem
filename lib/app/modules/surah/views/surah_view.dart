@@ -136,9 +136,9 @@ class SurahView extends GetView<SurahController> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 20),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.64,
+                          height: MediaQuery.of(context).size.height * 0.6,
                           child: Obx(() {
                             return controller.isLoading.value
                                 ? SizedBox.shrink()
