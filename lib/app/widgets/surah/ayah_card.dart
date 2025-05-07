@@ -94,17 +94,7 @@ class _AyahCardState extends State<AyahCard> {
         text:
             '${controller.surah.value.ayah![widget.index].arabText}\n\n${controller.surah.value.ayah![widget.index].meaning}',
       ),
-    ).then((_) {
-      Get.snackbar(
-        ' ',
-        'Snackbar dengan style lebih keren!',
-        snackPosition: SnackPosition.BOTTOM,
-        snackStyle: SnackStyle.FLOATING, // Menampilkan snackbar melayang
-        duration: Duration(seconds: 3),
-        backgroundColor: Colors.orange,
-        colorText: Colors.white,
-      );
-    });
+    );
   }
 
   @override
