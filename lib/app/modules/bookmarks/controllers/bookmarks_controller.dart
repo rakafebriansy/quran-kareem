@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:quran_kareem/app/data/caches/bookmark_cache.dart';
 import 'package:quran_kareem/app/data/models/bookmark_model.dart';
@@ -12,6 +13,8 @@ class BookmarksController extends GetxController {
 
   final SurahRepository _surahRepository;
   final BookmarkCache _bookmarkCache;
+
+  List<ScrollController> nestedControllers = [];
 
   BookmarksController(this._surahRepository, this._bookmarkCache);
 
@@ -53,6 +56,10 @@ class BookmarksController extends GetxController {
         }
         displaySurahs.value = this.surahs;
       }
+      nestedControllers = List.generate(
+        displaySurahs.length,
+        (_) => ScrollController(),
+      );
     } catch (error) {
       Get.snackbar('Error while fetching data', error.toString());
     } finally {

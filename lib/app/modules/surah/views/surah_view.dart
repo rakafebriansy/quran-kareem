@@ -13,6 +13,8 @@ class SurahView extends GetView<SurahController> {
   @override
   Widget build(BuildContext context) {
     final ScrollController _controller = ScrollController();
+        final appBarHeight =
+        MediaQuery.of(context).padding.top + AppBar().preferredSize.height;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -44,10 +46,10 @@ class SurahView extends GetView<SurahController> {
             ),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(24.0),
+                padding: EdgeInsets.fromLTRB(24, 12 + appBarHeight, 24, 24),
                 child: Stack(
                   children: [
                     Column(
@@ -132,7 +134,7 @@ class SurahView extends GetView<SurahController> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 30),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.64,
                           child: Obx(() {
@@ -148,7 +150,18 @@ class SurahView extends GetView<SurahController> {
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
                                     itemCount:
-                                        controller.surah.value.ayah?.length,
+                                        controller.surah.value.number > 1
+                                            ? controller
+                                                    .surah
+                                                    .value
+                                                    .ayah!
+                                                    .length +
+                                                1
+                                            : controller
+                                                .surah
+                                                .value
+                                                .ayah
+                                                ?.length,
                                     itemBuilder: (context, index) {
                                       if (controller.surah.value.ayah != null &&
                                           controller
@@ -156,28 +169,51 @@ class SurahView extends GetView<SurahController> {
                                               .value
                                               .ayah!
                                               .isNotEmpty) {
-                                        return Column(
-                                          children: [
-                                            AyahCard(
-                                              index: index,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                bottom: 24,
-                                              ),
-                                              child: Divider(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ],
-                                        );
+                                        switch (index) {
+                                          case 0:
+                                            if (controller.surah.value.number >
+                                                1) {
+                                              return Container(
+                                                padding: EdgeInsets.only(bottom: 30),
+                                                child: Center(
+                                                  child: Image.asset(
+                                                    AssetConstants
+                                                        .bismillahDefault,
+                                                    width: 200,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          default:
+                                            return Column(
+                                              children: [
+                                                AyahCard(index: index - 1),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        bottom: 24,
+                                                      ),
+                                                  child: Divider(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                        }
                                       }
-                                      return Center(
-                                        child: Text(
-                                          'No data',
-                                          style: GoogleFonts.poppins(),
-                                        ),
-                                      );
+                                      return controller
+                                                  .surah
+                                                  .value
+                                                  .ayah!
+                                                  .length >
+                                              0
+                                          ? SizedBox.shrink()
+                                          : Center(
+                                            child: Text(
+                                              'No data',
+                                              style: GoogleFonts.poppins(),
+                                            ),
+                                          );
                                     },
                                   ),
                                 );

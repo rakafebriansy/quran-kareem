@@ -74,7 +74,7 @@ class HomeView extends GetView<HomeController> {
                                           children: [
                                             Row(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.center,
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,

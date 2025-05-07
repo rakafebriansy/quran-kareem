@@ -17,7 +17,7 @@ class AssetConstants {
   static const String surahCardStar5 = '${_decorationImage}Surah Card Star 5.png';
   static const String frame = '${_decorationImage}Frame.png';
   static const String userDefault = '${_defaultImage}User.png';
-  static const String recentlyAyatDefault = '${_defaultImage}Bismillah.png';
+  static const String bismillahDefault = '${_defaultImage}Bismillah.png';
   static const String quranIcon = '${_iconImage}Quran.png';
   static const String greaterThanIcon = '${_iconImage}Greater Than.png';
 }

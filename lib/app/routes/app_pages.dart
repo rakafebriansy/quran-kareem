@@ -48,7 +48,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.AYAT_AL_KURSI,
-      page: () => const AyatAlKursiView(),
+      page: () => AyatAlKursiView(),
       binding: AyatAlKursiBinding(),
     ),
   ];
